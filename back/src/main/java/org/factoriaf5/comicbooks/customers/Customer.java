@@ -2,13 +2,15 @@ package org.factoriaf5.comicbooks.customers;
 
 import java.util.HashSet;
 import java.util.Set;
+import org.factoriaf5.comicbooks.roles.Role;
 
 import org.factoriaf5.comicbooks.orders.Order;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -68,20 +70,10 @@ public class Customer {
 
     @OneToMany(fetch = FetchType.LAZY)
     public Set<Order> orders = new HashSet<>();
-
-    // @ManyToMany
-    // @JoinTable(name="customer_order",
-    // joinColumns={@JoinColumn(name="customer_email",referencedColumnName =
-    // "email")},
-    // inverseJoinColumns={@JoinColumn(name="order_id",referencedColumnName =
-    // "id")})
-    // private Set<Order> orders;
-
-    // usado
-    // @ManyToMany(mappedBy = "customers", fetch = FetchType.LAZY, cascade =
-    // CascadeType.PERSIST)
-    // // @JsonIgnore
-    // public Set<Order> orders = new HashSet<>();
+    
+    @ManyToOne
+    @JoinColumn(name = "role_id") 
+    private Role role;
 
     public Customer(String email, String dni, String name, String surname, String surname2, String street, int number,
             String gate, String stairs, String floor, String letter, int postalcode, String town, String province,
@@ -234,7 +226,13 @@ public class Customer {
     public void setOrders(Set<Order> orders) {
         this.orders = orders;
     }
+    public Role getRole() {
+        return role;
+    }
 
+    public void setRole(Role role) {
+        this.role = role;
+    }
     
 
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Customer } from '../models/Customer.model';
+import { Role } from '../models/role';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -8,6 +9,7 @@ import { Observable } from 'rxjs';
 })
 export class CustomerService {
   private customerUrl = 'http://localhost:8000/customers'
+  private roleUrl = 'http://localhost:8000/roles'
   constructor(private httpClient: HttpClient) { }
   register(customer : Customer){
     return this.httpClient.post<Customer>(this.customerUrl, customer);
