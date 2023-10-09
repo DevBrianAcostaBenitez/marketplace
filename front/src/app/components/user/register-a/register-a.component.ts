@@ -31,7 +31,8 @@ export class RegisterAComponent {
     town: '',
     province: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    roleId: 1
   }
   constructor(
     private formBuilder: FormBuilder,
@@ -41,7 +42,6 @@ export class RegisterAComponent {
   ) {
     this.registrationForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)]],
-      dniType: ['', Validators.required],
       dni: ['', [Validators.required, Validators.pattern('[0-9]{8}[A-Z]')]],
       name: ['', [Validators.required, Validators.pattern('[A-Za-z ]*')]], 
       surname:  ['', [Validators.required, Validators.pattern('[A-Za-z ]*')]], 
@@ -56,7 +56,8 @@ export class RegisterAComponent {
       town: [''],
       province: [''],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', [Validators.required]]
+      confirmPassword: ['', [Validators.required]],
+      roleId:1
     },  { validators: this.passwordMatchValidator.bind(this) });
   }
   passwordMatchValidator(formGroup: FormGroup) {
@@ -69,10 +70,16 @@ export class RegisterAComponent {
     }
   }
   registerCustomer(): void {
+    console.log(this.registrationForm.valid)
     if (this.registrationForm.valid) {
-      const registrationData = this.registrationForm.value;
+      const registrationData: Customer = {
+        ...this.registrationForm.value,
+        roleId: 1
+      };
+      console.log(registrationData)
       this.customerService.register(registrationData).subscribe(
         (response: any) => {
+          console.log(response)
           Swal.fire({
             icon: 'success',
             title: 'Bienvenid@',

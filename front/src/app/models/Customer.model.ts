@@ -1,4 +1,4 @@
-import { Role } from "./role";
+
 export interface Customer{
     id: number;
     email: string;
@@ -17,5 +17,5 @@ export interface Customer{
     province: string;
     password: string;
     confirmPassword: string; 
-    role:Role;
+    roleId:number;
 }
